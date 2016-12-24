@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Gridview</string>
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_list__image">List_Image</string>
+    <string name="title_activity_show_image">showImage</string>
+    <string name="facebook_app_id">232430923835036</string>
+</resources>

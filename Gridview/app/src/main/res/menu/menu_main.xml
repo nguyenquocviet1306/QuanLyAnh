@@ -1,0 +1,21 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.example.dinhnam.gridview.MainActivity">
+
+    <item
+        android:id="@+id/action_folder"
+        android:orderInCategory="100"
+        android:title="xếp theo thư mục"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/action_time"
+        android:orderInCategory="100"
+        android:title="xếp theo dòng thời gian"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/action_all"
+        android:orderInCategory="100"
+        android:title="hiển thị tất cả"
+        app:showAsAction="never" />
+</menu>
