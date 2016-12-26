@@ -40,8 +40,9 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         FacebookSdk.sdkInitialize(getApplicationContext());
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fabMain);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -129,10 +130,11 @@ public class MainActivity extends AppCompatActivity {
                 int j=0;
                 Date lastDate = new Date(file.lastModified());//date của image
                 for(int i=0;i<images.size();i++){//kiem tra da ton tai date hay chua
-                    File file1=new File(images.get(i).getPath());
-                    Date lastDate_i = new Date(file1.lastModified());
-                    if(lastDate.equals(lastDate_i)){
+                    String date_i=images.get(i).getTitle();
+                    String date=lastDate.toString();
+                    if(date.equals(date_i)){
                         add=false;
+                        break;
                     }
                 }
                 if(add) {//neu chua thi them vao arraylist
@@ -177,14 +179,18 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public Bitmap bitmapSampleSize(String path){
-            Bitmap bm;
-            BitmapFactory.Options options = new BitmapFactory.Options();
-            options.inJustDecodeBounds = true; //Chỉ đọc thông tin ảnh, không đọc dữ liwwuj
-            //BitmapFactory.decodeFile(path, options); //Đọc thông tin ảnh
-            options.inSampleSize = 16; //Scale bitmap xuống 16 lần
-            options.inJustDecodeBounds = false; //Cho phép đọc dữ liệu ảnh ảnh
-            bm=BitmapFactory.decodeFile(path, options);
-            return bm;
+        int maxWidth=100;
+        int maxHeight=100;
+        BitmapFactory.Options options = new BitmapFactory.Options();
+        options.inJustDecodeBounds = true; //Chỉ đọc thông tin ảnh, không đọc dữ liwwuj
+        BitmapFactory.decodeFile(path, options); //Đọc thông tin ảnh
+        int Height= options.outHeight;
+        int Width = options.outWidth;
+        int k=Math.max(Height/maxHeight,Width/maxWidth);
+        options.inSampleSize = k; //Scale bitmap xuống k lần
+        options.inJustDecodeBounds = false; //Cho phép đọc dữ liệu ảnh ảnh
+        return BitmapFactory.decodeFile(path, options);
+
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

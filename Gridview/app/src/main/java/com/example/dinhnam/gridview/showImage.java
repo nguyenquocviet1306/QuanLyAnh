@@ -12,7 +12,6 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageSwitcher;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -29,46 +28,22 @@ public class showImage extends AppCompatActivity {
     private static final String TAG = showImage.class.toString();
     ImageView imageView;
     ShareDialog shareDialog;
-    //Button sharebt;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_show_image);
-        shareDialog = new ShareDialog(this);
-        //sharebt = (Button) findViewById(R.id.bt_share);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        shareDialog = new ShareDialog(this);
         imageView=(ImageView)findViewById(R.id.imageView);
         Intent callerIntent=getIntent();
         Bundle packageFromCaller= callerIntent.getBundleExtra("image");
         String path=packageFromCaller.getString("path");
-        final File file = new File(path);
+        File file = new File(path);
         Date lastModDate = new Date(file.lastModified());
-        final Bitmap bm= BitmapFactory.decodeFile(path);
+        Bitmap bm= BitmapFactory.decodeFile(path);
         imageView.setImageBitmap(bm);
         Toast.makeText(this,path+"\n"+lastModDate.toString(),Toast.LENGTH_SHORT).show();
-//        sharebt.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Log.d(TAG, "clicked");
-//                if (ShareDialog.canShow(SharePhotoContent.class)) {
-//                    //Bitmap image = BitmapFactory.decodeResource(getResources(),id);
-//                    SharePhoto photo = new SharePhoto.Builder()
-//                            .setBitmap(bm)
-//                            .build();
-//
-//                    SharePhotoContent content = new SharePhotoContent.Builder()
-//                            .addPhoto(photo)
-//                            .build();
-//
-//                    ShareApi.share(content, null);
-//                    shareDialog.show(content);
-//
-//
-//                }
-//            }
-//        });
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -85,17 +60,19 @@ public class showImage extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_share) {
-
-            Toast.makeText(this,"share",Toast.LENGTH_SHORT).show();
             Log.d(TAG, "clicked");
             if (ShareDialog.canShow(SharePhotoContent.class)) {
-                //Bitmap image = BitmapFactory.decodeResource(getResources(),id);
                 Intent callerIntent=getIntent();
                 Bundle packageFromCaller= callerIntent.getBundleExtra("image");
                 String path=packageFromCaller.getString("path");
-                final Bitmap bm= BitmapFactory.decodeFile(path);
+                File file = new File(path);
+                Bitmap bm= BitmapFactory.decodeFile(path);
+
+                //Bitmap image = BitmapFactory.decodeResource(getResources(),id);
+
                 SharePhoto photo = new SharePhoto.Builder()
                         .setBitmap(bm)
+                        .setCaption("Give me my codez or I will ... you know, do that thing you don't like!")
                         .build();
 
                 SharePhotoContent content = new SharePhotoContent.Builder()
@@ -107,8 +84,8 @@ public class showImage extends AppCompatActivity {
 
 
             }
-            return true;
         }
+
 
         return super.onOptionsItemSelected(item);
     }
